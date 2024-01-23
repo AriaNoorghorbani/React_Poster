@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import classes from "./NewPost.module.css";
 
@@ -35,9 +36,9 @@ function NewPost({ handleChangeBody, handleChangeText, onCancel, onAddPost }) {
           />
         </p>
         <div className={classes.actions}>
-          <button type="button" onClick={onCancel}>
+          <Link type="button" to="..">
             Cancel
-          </button>
+          </Link>
           <button>Submit</button>
         </div>
       </form>

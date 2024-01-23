@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Posts from "./Posts.jsx";
+import Posts from "./routes/Posts.jsx";
 import "./index.css";
 import NewPost from "./components/NewPost.jsx";
 import RootLayout from "./routes/RootLayout.jsx";

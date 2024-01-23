@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 import "./Posts.css";
-import MainHeader from "./components/MainHeader";
-import Modal from "./components/Modal";
-import NewPost from "./components/NewPost";
-import PostList from "./components/PostList";
+import MainHeader from "../components/MainHeader";
+import Modal from "../components/Modal";
+import NewPost from "../components/NewPost";
+import PostList from "../components/PostList";
 import { Outlet } from "react-router-dom";
 
 function Posts() {
