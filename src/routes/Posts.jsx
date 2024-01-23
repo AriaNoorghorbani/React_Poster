@@ -5,10 +5,6 @@ import { Outlet, useLoaderData } from "react-router-dom";
 function Posts() {
   const post = useLoaderData();
 
-  function handleToggleModal() {
-    setModalIsVisible(false);
-  }
-
   return (
     <>
       <Outlet />

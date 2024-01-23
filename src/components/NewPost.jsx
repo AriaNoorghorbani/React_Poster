@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Form, Link, redirect } from "react-router-dom";
 import Modal from "./Modal";
 import classes from "./NewPost.module.css";
