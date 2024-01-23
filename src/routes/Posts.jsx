@@ -9,18 +9,6 @@ function Posts() {
     setModalIsVisible(false);
   }
 
-  function handleAddNewPost(name, text) {
-    const postBody = { name, text };
-    fetch("http://localhost:8080/posts", {
-      method: "POST",
-      body: JSON.stringify(postBody),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    handleToggleModal();
-  }
-
   return (
     <>
       <Outlet />

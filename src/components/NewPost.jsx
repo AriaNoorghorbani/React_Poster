@@ -1,39 +1,19 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import Modal from "./Modal";
 import classes from "./NewPost.module.css";
 
-function NewPost({ handleChangeBody, handleChangeText, onCancel, onAddPost }) {
-  const name = useRef();
-  const text = useRef();
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    onAddPost(name.current.value, text.current.value);
-  }
-
+function NewPost() {
   return (
     <Modal>
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <Form method="post" className={classes.form}>
         <p>
           <label htmlFor="body">Text</label>
-          <textarea
-            id="body"
-            required
-            rows={3}
-            onChange={handleChangeBody}
-            ref={text}
-          />
+          <textarea id="body" required rows={3} name="text" />
         </p>
         <p>
           <label htmlFor="name">Your name</label>
-          <input
-            type="text"
-            id="name"
-            required
-            onChange={handleChangeText}
-            ref={name}
-          />
+          <input type="text" id="name" required name="name" />
         </p>
         <div className={classes.actions}>
           <Link type="button" to="..">
@@ -41,9 +21,22 @@ function NewPost({ handleChangeBody, handleChangeText, onCancel, onAddPost }) {
           </Link>
           <button>Submit</button>
         </div>
-      </form>
+      </Form>
     </Modal>
   );
 }
 
 export default NewPost;
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const postBody = Object.fromEntries(formData);
+  await fetch("http://localhost:8080/posts", {
+    method: "POST",
+    body: JSON.stringify(postBody),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return redirect("/");
+}
