@@ -1,11 +1,11 @@
 import React from "react";
 import classes from "./Post.module.css";
 
-export default function ({ getName }) {
+export default function ({ name, text }) {
   return (
     <li className={classes.post}>
-      <p className={classes.author}>{getName}</p>
-      <p className={classes.text}>Blog Post</p>
+      <p className={classes.author}>{name}</p>
+      <p className={classes.text}>{text}</p>
     </li>
   );
 }

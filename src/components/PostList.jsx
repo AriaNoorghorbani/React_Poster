@@ -2,13 +2,14 @@ import React from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 
-export default function PostList() {
-  const names = ["Aria", "Rashin"];
-
+export default function PostList({ posts }) {
   return (
     <ul className={classes.posts}>
-      <Post getName={names[0]} />
-      <Post getName={names[1]} />
+      {posts.map((post) => {
+        return (
+          <Post key={post.name + post.text} name={post.name} text={post.text} />
+        );
+      })}
     </ul>
   );
 }
