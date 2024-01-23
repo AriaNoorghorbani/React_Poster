@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+
+import "./Posts.css";
 import MainHeader from "./components/MainHeader";
 import Modal from "./components/Modal";
 import NewPost from "./components/NewPost";
 import PostList from "./components/PostList";
+import { Outlet } from "react-router-dom";
 
-function App() {
+function Posts() {
   const [body, setBody] = useState("");
   const [text, setText] = useState("");
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -59,24 +61,16 @@ function App() {
 
   return (
     <>
-      <MainHeader onCreatePost={handleShowModal} />
-      {modalIsVisible && (
-        <Modal toggleModal={handleToggleModal}>
-          <NewPost
-            handleChangeBody={handleChangeBody}
-            handleChangeText={handleChangeText}
-            onCancel={handleToggleModal}
-            onAddPost={handleAddNewPost}
-          />
-        </Modal>
-      )}
-      {isLoading && <div>Posts is loading...</div>}
-      {post.length > 0 && (
-        <PostList getBody={body} getText={text} posts={post} />
-      )}
-      {!isLoading && post.length == 0 && <div>There is no post yet</div>}
+      <Outlet />
+      <main>
+        {isLoading && <div>Posts is loading...</div>}
+        {post.length > 0 && (
+          <PostList getBody={body} getText={text} posts={post} />
+        )}
+        {!isLoading && post.length == 0 && <div>There is no post yet</div>}
+      </main>
     </>
   );
 }
 
-export default App;
+export default Posts;
