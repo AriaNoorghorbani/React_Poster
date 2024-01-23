@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import MainHeader from "./components/MainHeader";
 import Modal from "./components/Modal";
@@ -8,11 +8,9 @@ import PostList from "./components/PostList";
 function App() {
   const [body, setBody] = useState("");
   const [text, setText] = useState("");
-  const [modalIsVisible, setModalIsVisible] = useState(true);
-  const [post, setPosts] = useState([
-    { name: "Aria", text: "Salam Chetori" },
-    { name: "Rashin", text: "Shirvani" },
-  ]);
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [post, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleChangeBody(event) {
     setBody(event.target.value);
@@ -27,6 +25,14 @@ function App() {
   }
 
   function handleAddNewPost(name, text) {
+    const postBody = { name, text };
+    fetch("http://localhost:8080/posts", {
+      method: "POST",
+      body: JSON.stringify(postBody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     setPosts((prevState) => [...prevState, { name: name, text: text }]);
     handleToggleModal();
   }
@@ -34,6 +40,22 @@ function App() {
   function handleShowModal() {
     setModalIsVisible(true);
   }
+
+  useEffect(() => {
+    async function fetchPosts() {
+      setIsLoading(true);
+      const response = await fetch("http://localhost:8080/posts");
+
+      if (!response.ok) {
+        throw new Error("Can fetch Posts");
+      }
+
+      const resData = await response.json();
+      setPosts(resData.posts);
+      setIsLoading(false);
+    }
+    fetchPosts();
+  }, []);
 
   return (
     <>
@@ -48,7 +70,11 @@ function App() {
           />
         </Modal>
       )}
-      <PostList getBody={body} getText={text} posts={post} />
+      {isLoading && <div>Posts is loading...</div>}
+      {post.length > 0 && (
+        <PostList getBody={body} getText={text} posts={post} />
+      )}
+      {!isLoading && post.length == 0 && <div>There is no post yet</div>}
     </>
   );
 }
