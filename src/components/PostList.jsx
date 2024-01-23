@@ -6,9 +6,7 @@ export default function PostList({ posts }) {
   return (
     <ul className={classes.posts}>
       {posts.map((post) => {
-        return (
-          <Post key={post.name + post.text} name={post.name} text={post.text} />
-        );
+        return <Post key={post.id} name={post.name} text={post.text} />;
       })}
     </ul>
   );
